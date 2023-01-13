@@ -13,17 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('category_id')->constrained('categories');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone_number')->unique();
-            $table->text('address')->nullable();
-            $table->boolean('active_subscription')->default(0);
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->enum('role', ['admin', 'event', 'user']);
-            $table->rememberToken();
+            $table->text('details')->nullable();
+            $table->date('date');
+            $table->enum('status', ['upcoming', 'active', 'completed'])->default('upcoming');
+            $table->string('ticket_path');
+            $table->decimal('price', 10, 2);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('events');
     }
 };
