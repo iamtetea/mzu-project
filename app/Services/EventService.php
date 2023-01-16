@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Jobs\EventCode;
 use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +15,8 @@ class EventService
         $attributes['slug'] = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $attributes['name']));
 
         $event = Event::create($attributes);
+        EventCode::dispatch($event->id);
+
         $attributes['event_id'] = $event['id'];
 
         foreach ($attributes['items'] as $item) {

@@ -41,6 +41,7 @@
                 <table class="table table-responsive">
                     <thead>
                       <tr>
+                        <th scope="col">CODE</th>
                         <th scope="col">NAME</th>
                         <th scope="col">CATEGORY</th>
                         <th scope="col">EVENT DATE</th>
@@ -52,6 +53,7 @@
                     @forelse ($data as $item)
                         <tbody>
                             <tr>
+                                <td>{{ $item->code }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->category->name }}</td>
                                 <td>{{ date('d-m-Y', strtotime($item->date)) }}</td>
