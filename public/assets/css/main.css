@@ -11,10 +11,10 @@ a {
     color: black !important;
 }
 
-a:hover {
-    color: #0d6efd !important;
-}
-
 .text-bold {
     font-weight: 700;
+}
+
+.menu-wrapper {
+    margin-left: 5px;
 }

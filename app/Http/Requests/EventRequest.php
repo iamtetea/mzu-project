@@ -32,7 +32,7 @@ class EventRequest extends FormRequest
             'name' => 'required',
             'category' => 'required',
             'date' => 'required',
-            'price' => 'required|numeric',
+            'items' => 'sometimes|required|array',
         ];
     }
 }

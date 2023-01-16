@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventRequest;
 use App\Models\Category;
 use App\Models\Event;
+use App\Services\EventService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class EventsController extends Controller
 {
@@ -26,9 +26,8 @@ class EventsController extends Controller
 
             $q->orWhere('name', 'like', '%' . $search . '%');
             $q->orWhere('details', 'like', '%' . $search . '%');
-            $q->orWhere('price', 'like', '%' . $search . '%');
             $q->orWhere('status', 'like', '%' . $search . '%');
-        })->orderBy('date', 'asc')->paginate(2);
+        })->orderBy('date', 'asc')->paginate();
 
         return view('admin.events.index', compact('data'));
     }
@@ -50,13 +49,9 @@ class EventsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EventRequest $request)
+    public function store(EventRequest $request, EventService $service)
     {
-        $attributes = $request->all();
-        $attributes['user_id'] = Auth::user()->id;
-        $attributes['category_id'] = $attributes['category'];
-
-        Event::create($attributes);
+        $service->create($request->all());
         return redirect('/admin/events/new')->with('success', 'Event added successfully');
     }
 
@@ -68,7 +63,9 @@ class EventsController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Event::findOrFail($id);
+        $categories = Category::all();
+        return view('admin.events.details', compact('data', 'categories'));
     }
 
     /**
@@ -89,9 +86,10 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EventRequest $request, $id, EventService $service)
     {
-        //
+        $service->update($id, $request->all());
+        return redirect('/admin/events/' . $id)->with('success', 'Event updated successfully');
     }
 
     /**
@@ -102,6 +100,7 @@ class EventsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Event::destroy($id);
+        return redirect('/admin/events')->with('success', 'Event deleted successfully');
     }
 }

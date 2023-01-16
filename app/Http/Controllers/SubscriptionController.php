@@ -15,7 +15,14 @@ class SubscriptionController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Subscription::orderBy('created_at', 'desc')->paginate();
+        $search = $request->search;
+        $data = Subscription::when($search, function ($q) use ($search) {
+            $q->where('name', 'like', '%' . $search . '%');
+            $q->orWhere('price', 'like', '%' . $search . '%');
+            $q->orWhere('type', 'like', '%' . $search . '%');
+            $q->orWhere('duration', 'like', '%' . $search . '%');
+        })->orderBy('created_at', 'desc')->paginate();
+
         return view('admin.subscriptions.index', compact('data'));
     }
 

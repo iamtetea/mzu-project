@@ -17,12 +17,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('category_id')->constrained('categories');
+            $table->string('code');
             $table->string('name');
+            $table->string('slug');
             $table->text('details')->nullable();
             $table->date('date');
-            $table->enum('status', ['upcoming', 'active', 'completed'])->default('upcoming');
-            $table->string('ticket_path');
-            $table->decimal('price', 10, 2);
+            $table->integer('limit');
+            $table->enum('status', ['upcoming', 'active', 'completed', 'cancelled'])->default('upcoming');
             $table->timestamps();
             $table->softDeletes();
         });

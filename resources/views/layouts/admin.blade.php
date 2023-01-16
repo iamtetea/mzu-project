@@ -15,97 +15,99 @@
     @show
 </head>
 <body>
-    @section('topbar')
-    <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container">
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <a class="navbar-brand" href="/admin">
-                    <img src="/assets/images/logo.png" alt="Logo" width="25" class="d-inline-block align-text-top">
-                    Event Booking Admin
-                </a>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/contact">Contact</a>
-                  </li>
-                </ul>
+    <div class="container-fluid row">
+        <div class="col-2">
+            <div>
+                <nav class="navbar bg-body-white text-center">
+                    <a class="navbar-brand" href="/admin">
+                    <img src="/assets/images/logo.png" alt="Logo" width="20%" class="d-inline-block align-text-top">
+                    <span class="text-bold">
+                        <div>EVENT ADMIN</div>
+                    </span>
+                    </a>
+                </nav>
+            </div>
 
-                <div class="d-flex">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-user"></i>
-                            <span class="">{{ auth()->user()->name }}</span>
+            {{-- @php
+                $route = Route::currentRouteName();
+            @endphp
+
+            {{ $route }} --}}
+
+            <div class="mt-3">
+                <div class="list-group">
+                    <a href="/admin">
+                        <button type="button" class="list-group-item list-group-item-action">
+                            <i class="fa fa-home"></i>
+                            <span class="menu-wrapper">Dashboard</span>
                         </button>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">Profile</a></li>
-                          <li><a class="dropdown-item" href="#">Subscriptions</a></li>
-                          {{-- <li><a class="dropdown-item" href="#">Logout</a></li> --}}
+                    </a>
 
-                          @auth
-                          <form action="/logout" method="post">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Logout</button>
-                          </form>
-                          @endauth
+                    <a href="/admin/events">
+                        <button type="button" class="list-group-item list-group-item-action">
+                            <i class="fa fa-calendar"></i>
+                            <span class="menu-wrapper">Events</span>
+                        </button>
+                    </a>
 
-                          @guest
-                          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="/login">Login</a>
-                            </li>
+                    <a href="/admin/categories">
+                        <button type="button" class="list-group-item list-group-item-action">
+                            <i class="fa fa-bookmark"></i>
+                            <span class="menu-wrapper">Categories</span>
+                        </button>
+                    </a>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="/register">Register</a>
-                            </li>
-                          </ul>
-                          @endguest
-                        </ul>
-                    </div>
+                    <a href="/admin/subscriptions">
+                        <button type="button" class="list-group-item list-group-item-action">
+                            <i class="fa fa-tags"></i>
+                            <span class="menu-wrapper">Subscriptions</span>
+                        </button>
+                    </a>
                 </div>
-              </div>
-            </div>
-        </nav>
-    </header>
-    @show
-
-    <main>
-        <div class="row">
-            <div class="col-2">
-                <div>
-                    <ul class="list-group">
-                        <li class="list-group-item">Dashboard</li>
-
-                        <li class="list-group-item">
-                            <a href="/admin/subscriptions">Subscriptions</a>
-                        </li>
-
-                        <li class="list-group-item">
-                            <a href="/admin/categories">Categories</a>
-                        </li>
-
-                        <li class="list-group-item">
-                            <a href="/admin/events">Events</a>
-                        </li>
-
-                        <li class="list-group-item">Payments</li>
-                        <li class="list-group-item">Users</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-10">
-                @yield('breadcrumbs')
-                @yield('content')
             </div>
         </div>
-    </main>
+
+        <div class="col-10">
+            <nav class="navbar bg-body-light">
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="/admin">@yield('title')</a>
+                  <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Logout">
+                    <i class="fa fa-home"></i>
+                  </button>
+                </div>
+            </nav>
+
+            @yield('breadcrumbs')
+            @yield('content')
+        </div>
+    </div>
 
     @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+        $('.show-confirm').click(function(event) {
+          var form =  $(this).closest("form")
+          var name = $(this).data("name")
+          event.preventDefault()
+          swal({
+              title: `Are you sure you want to delete this record?`,
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              form.submit()
+            }
+          })
+        })
+    </script>
     @show
 </body>
 </html>

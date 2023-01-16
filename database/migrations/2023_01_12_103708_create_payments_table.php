@@ -15,16 +15,20 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone_number');
+            $table->string('address');
             $table->string('payable_id');
             $table->string('payable_type');
-            $table->decimal('price', 10, 2);
-            $table->decimal('amount_paid', 10, 2);
+            $table->decimal('sub_total', 10, 2);
+            $table->decimal('tax', 10, 2);
             $table->decimal('discount', 10, 2);
+            $table->decimal('total', 10, 2);
             $table->enum('mode', ['online', 'offline']);
             $table->string('rzp_payment_id')->nullable();
             $table->text('payment_details')->nullable();
-            $table->string('status')->default('pending');
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
         });

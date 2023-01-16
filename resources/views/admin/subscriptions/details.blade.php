@@ -15,65 +15,71 @@
 
 @section('content')
     <div class="container">
-        <div class="text-bold mb-2">SUBSCRIPTION FORM</div>
-
-        @if (session()->get('success'))
-            <div class="mt-3 container alert alert-success" role="alert">
-                {{ session()->get('success') }}
-            </div>
-        @endif
-
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-6">
-                <form action="{{ '/admin/subscriptions/' . $data->id }}" method="post">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="mb-3">
-                        <label for="nameInput" class="form-label">Name</label>
-                        <input name="name" value="{{ $data->name }}" type="text" class="form-control" id="nameInput" aria-describedby="nameHelp">
-                        @error('name')
-                        <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="durationInput" class="form-label">DURATION</label>
-                        <input name="duration" value="{{ $data->duration }}" type="number" class="form-control" id="durationInput" aria-describedby="durationHelp">
-                        @error('duration')
-                        <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="flexRadioDefault1" class="form-label">TYPE</label>
-                        <div class="form-check">
-                            <input name="type" value="months" class="form-check-input" type="radio" id="flexRadioDefault1" {{ $data->type === 'months' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                Months
-                            </label>
-                        </div>
-
-                        <div class="form-check">
-                            <input name="type" value="years" class="form-check-input" type="radio" id="flexRadioDefault2" {{ $data->type === 'years' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                Years
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="priceInput" class="form-label">Price</label>
-                        <input name="price" value="{{ $data->price }}" type="number" step="0.01" class="form-control" id="priceInput" aria-describedby="priceHelp">
-                        @error('price')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+        <div class="card">
+            <div class="card-header">
+                SUBSCRIPTION FORM
             </div>
 
-            <div class="col-xs-12 col-sm-12 col-md-6"></div>
+            <div class="card-body">
+                @if (session()->get('success'))
+                    <div class="container alert alert-success" role="alert">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <form action="{{ '/admin/subscriptions/' . $data->id }}" method="post">
+                            @csrf
+                            @method('PUT')
+
+                            <div class="mb-3">
+                                <label for="nameInput" class="form-label">Name</label>
+                                <input name="name" value="{{ $data->name }}" type="text" class="form-control" id="nameInput" aria-describedby="nameHelp">
+                                @error('name')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="durationInput" class="form-label">DURATION</label>
+                                <input name="duration" value="{{ $data->duration }}" type="number" class="form-control" id="durationInput" aria-describedby="durationHelp">
+                                @error('duration')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="flexRadioDefault1" class="form-label">TYPE</label>
+                                <div class="form-check">
+                                    <input name="type" value="months" class="form-check-input" type="radio" id="flexRadioDefault1" {{ $data->type === 'months' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        Months
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input name="type" value="years" class="form-check-input" type="radio" id="flexRadioDefault2" {{ $data->type === 'years' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        Years
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="priceInput" class="form-label">Price</label>
+                                <input name="price" value="{{ $data->price }}" type="number" step="0.01" class="form-control" id="priceInput" aria-describedby="priceHelp">
+                                @error('price')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-6"></div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

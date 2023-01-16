@@ -21,11 +21,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
+Route::get('/login', [LoginController::class, 'index'])->name('login');
 
-Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegistrationController::class, 'register']);
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout']);
@@ -34,8 +34,13 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('events/new', [EventsController::class, 'create']);
         Route::get('events/search', [EventsController::class, 'index']);
+        Route::get('events/filter', [EventsController::class, 'index']);
+
         Route::get('categories/new', [CategoryController::class, 'create']);
+        Route::get('categories/search', [CategoryController::class, 'index']);
+
         Route::get('subscriptions/new', [SubscriptionController::class, 'create']);
+        Route::get('subscriptions/search', [SubscriptionController::class, 'index']);
 
         Route::resources([
             'events' => EventsController::class,

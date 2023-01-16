@@ -13,9 +13,13 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Category::orderBy('created_at', 'desc')->paginate();
+        $search = $request->search;
+        $data = Category::when($search, function ($q) use ($search) {
+            $q->where('name', 'like', '%' . $search . '%');
+        })->orderBy('created_at', 'desc')->paginate();
+
         return view('admin.categories.index', compact('data'));
     }
 
@@ -49,7 +53,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Category::findOrFail($id);
+        return view('admin.categories.details', compact('data'));
     }
 
     /**
@@ -70,9 +75,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        $data = Category::findOrFail($id);
+        $data->name = $request->name;
+        $data->save();
+
+        return redirect('/admin/categories/' . $id)->with('success', 'Category updated successfully');
     }
 
     /**
@@ -83,6 +92,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Category::destroy($id);
+        return redirect('/admin/categories')->with('success', 'Category deleted successfully');
     }
 }
