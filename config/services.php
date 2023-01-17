@@ -31,4 +31,12 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'razorpay' => [
+        'live_key' => env('RZP_LIVE_SECRET'),
+        'live_secret' => env('RZP_LIVE_SECRET'),
+
+        'test_key' => env('RZP_TEST_API_KEY'),
+        'test_secret' => env('RZP_TEST_SECRET'),
+    ],
+
 ];

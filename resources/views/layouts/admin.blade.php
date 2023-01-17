@@ -63,6 +63,13 @@
                             <span class="menu-wrapper">Subscriptions</span>
                         </button>
                     </a>
+
+                    <a href="/admin/payments">
+                        <button type="button" class="list-group-item list-group-item-action">
+                            <i class="fa fa-tags"></i>
+                            <span class="menu-wrapper">Payments</span>
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
