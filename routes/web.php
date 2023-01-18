@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('index');
 
 Route::post('/payment', [PaymentsController::class, 'payment']);
+Route::get('/payment/{id}', [PaymentsController::class, 'makePdf']);
 
 Route::post('/payment/verify', [PaymentsController::class, 'verfiPayment']);
 Route::post('/payment/fail', [PaymentsController::class, 'failPayment']);

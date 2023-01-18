@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PaymentRequest;
+use App\Jobs\MakeTicket;
+use App\Models\EventItem;
 use App\Models\Payment;
+use App\Services\StorageService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -54,6 +58,8 @@ class PaymentsController extends Controller
                 $eventPayment->payment_details = "Event booking";
                 $eventPayment->status = $response['status'];
                 $eventPayment->save();
+
+                MakeTicket::dispatch($eventPayment->id);
             } catch (Exception $e) {
                 return  $e->getMessage();
                 Session::put('error',$e->getMessage());
@@ -63,5 +69,20 @@ class PaymentsController extends Controller
 
         Session::put('success', 'Payment successful');
         return redirect()->back();
+    }
+
+    public function makePdf($id)
+    {
+        $payment = Payment::find($id);
+        info($payment);
+        $pdf = Pdf::loadView('ticket.pdf', $payment);
+        return $pdf->download('invoice.pdf');
+
+        // return view('ticket.pdf', compact('payment'));
+        // $pdf = Pdf::loadView('ticket.pdf', compact('payment'));
+        // return $pdf->download('ticket.pdf');
+
+        // $storageService = new StorageService();
+        // $storageService->uploadImage('tickets', $pdf);
     }
 }

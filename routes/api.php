@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('events', [HomeController::class, 'getEvents']);
+Route::post('categories', [HomeController::class, 'storeCategory']);
+Route::post('/categories/{id}', [HomeController::class, 'updateCategory']);
+Route::delete('/categories/{id}', [HomeController::class, 'deleteCategory']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
