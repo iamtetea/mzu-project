@@ -24,6 +24,7 @@ class PaymentsController extends Controller
         })->orderBy('created_at', 'desc')->paginate();
 
         return view('admin.payments.index', compact('data'));
+        // return view('admin.payments.index')->with($data);
     }
 
     public function payment(PaymentRequest $request)

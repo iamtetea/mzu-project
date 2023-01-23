@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $data = Event::orderBy('date', 'asc')->paginate(3);
+        $data = Event::orderBy('date', 'asc')->paginate();
         return view('index', compact('data'));
     }
 

@@ -37,6 +37,7 @@
                       <tr>
                         <th scope="col">BUYER</th></th>
                         <th scope="col">AMOUNT</th>
+                        <th scope="col">ITEM</th>
                         <th scope="col">RZP PAYMENT ID</th>
                         <th scope="col">CREATED AT</th>
                         <th scope="col">UPDATED AT</th>
@@ -54,6 +55,7 @@
                                 </td>
 
                                 <td>₹{{ $item->total }}</td>
+                                <td>{{ $item->payable->event->name }}</td>
                                 <td>{{ $item->rzp_payment_id }}</td>
                                 <td>{{ date('d-m-Y h:i a', strtotime($item->created_at)) }}</td>
                                 <td>{{ date('d-m-Y h:i a', strtotime($item->updated_at)) }}</td>
