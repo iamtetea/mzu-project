@@ -32,15 +32,16 @@ class PaymentsController extends Controller
         // $key = env('RZP_TEST_API_KEY'); // direct env
 
         $input = $request->all();
+        info($input);
         $key = config('services.razorpay.test_key'); // from config
         $secret = config('services.razorpay.test_secret'); // from config
 
         $api = new Api($key, $secret);
         $payment = $api->payment->fetch($request->razorpay_payment_id);
 
-        if(count($input)  && !empty($input['razorpay_payment_id'])) {
+        if(count($input) && !empty($input['razorpay_payment_id'])) {
             try {
-                // rzp payment status neih ho = create, authorize, capture, failed
+                // rzp payment status neih ho = create, authorized, captured, failed
                 $response = $api->payment->fetch($input['razorpay_payment_id'])->capture(array('amount' => $payment['amount']));
 
                 $eventPayment = new Payment();

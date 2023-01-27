@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
+use App\Http\Resources\EventCollection;
 use App\Models\Category;
 use App\Models\Event;
 use Illuminate\Http\Request;
@@ -23,6 +24,13 @@ class HomeController extends Controller
     public function getEvents(Request $request)
     {
         return Event::where('status', $request->status)->orderBy('date', 'asc')->get();
+    }
+
+    public function getEventsApi()
+    {
+        $events = Event::orderBy('date', 'asc')->get();
+        // return $events;
+        return new EventCollection($events);
     }
 
     public function storeCategory(CategoryRequest $request)

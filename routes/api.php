@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('events', [HomeController::class, 'getEvents']);
+Route::get('events', [HomeController::class, 'getEventsApi']);
 Route::post('categories', [HomeController::class, 'storeCategory']);
 Route::post('/categories/{id}', [HomeController::class, 'updateCategory']);
 Route::delete('/categories/{id}', [HomeController::class, 'deleteCategory']);
