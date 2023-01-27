@@ -17,9 +17,9 @@ class EventCollection extends ResourceCollection
         $events = [];
         foreach($this->collection as $event) {
             array_push($events, [
-            'name' => $event->name,
-            'date' => $event->date,
-            'limit' => $event->limit,
+                'name' => $event->name,
+                'date' => $event->date,
+                'limit' => $event->limit,
             ]);
         }
         return $events;
